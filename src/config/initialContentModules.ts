@@ -83,6 +83,37 @@ export const initialContentModules = [
           { id: "heading", label: "Section heading", type: "text", value: "Frequently Asked Questions" },
           { id: "faqItems", label: "FAQ items", type: "textarea", value: "How do you ensure the freshness of your dry fruits? | We source directly from selected farms during peak harvest season.\nAre your products completely organic? | Yes, our entire curated selection is 100% organic and pesticide-free.\nWhat is your shipping policy? | Orders are processed within 24 hours and delivery typically takes 2-4 business days." }
         ]
+      },
+      {
+        id: "home-product-details",
+        title: "Product details section",
+        type: "Product details",
+        status: "Published",
+        updatedAt: "2026-06-11",
+        fields: [
+          { id: "walnutEyebrow", label: "Walnut Eyebrow", type: "text", value: "NATURAL SUPERFOOD" },
+          { id: "walnutHeading", label: "Walnut Heading", type: "text", value: "The Brain-Boosting Power of Walnuts" },
+          { id: "walnutDescription", label: "Walnut Description", type: "textarea", value: "Rich in omega-3 fatty acids and antioxidants, our Chilean walnuts are more than just a snack. They are essential fuel for cognitive health and heart vitality." },
+          { id: "walnutBullets", label: "Walnut Bullets (one per line)", type: "textarea", value: "High in Omega-3 DHA\nSupports Heart Health\nNatural Energy Booster" },
+          { id: "walnutImage", label: "Walnut Image", type: "image", value: "/assets/walnutDetail.png" },
+          { id: "almondEyebrow", label: "Almond Eyebrow", type: "text", value: "IMMUNE SUPPORT" },
+          { id: "almondHeading", label: "Almond Heading", type: "text", value: "Almonds: Nature's Daily Multi-Vitamin" },
+          { id: "almondDescription", label: "Almond Description", type: "textarea", value: "Packed with Vitamin E, magnesium, and protein, our California almonds help maintain healthy skin and a robust immune system with every crunch." },
+          { id: "almondBullets", label: "Almond Bullets (one per line)", type: "textarea", value: "Rich in Vitamin E\nHigh Fiber Content\nPromotes Skin Health" },
+          { id: "almondImage", label: "Almond Image", type: "image", value: "/assets/almondDetail.png" }
+        ]
+      },
+      {
+        id: "home-timeline",
+        title: "Heritage timeline section",
+        type: "Heritage Timeline",
+        status: "Published",
+        updatedAt: "2026-06-11",
+        fields: [
+          { id: "heading", label: "Section Heading", type: "text", value: "Our Heritage Journey" },
+          { id: "description", label: "Section Description", type: "textarea", value: "Tracing our roots back to the finest organic orchards." },
+          { id: "events", label: "Timeline Events (Year | Title | Description | Align)", type: "textarea", value: "1994 | The Seed is Sown | Founded as a small family orchard in the foothills, focused on traditional farming methods. | left\n2008 | Organic Certification | One of the first in the region to achieve global 100% organic certification for all our produce. | right\n2024 | NutriHarvest Global | Launching our digital experience to deliver premium health directly to your doorstep worldwide. | left" }
+        ]
       }
     ]
   },
