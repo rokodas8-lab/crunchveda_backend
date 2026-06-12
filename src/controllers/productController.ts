@@ -91,7 +91,7 @@ export const getProducts = async (
 
     const total = await Product.countDocuments(query);
     const products = await Product.find(query)
-      .populate("category", "name slug description image")
+      .populate("category", "name slug image isActive")
       .sort({ createdAt: -1 })
       .skip(skipNum)
       .limit(limitNum);
