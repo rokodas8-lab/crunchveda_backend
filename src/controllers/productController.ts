@@ -51,9 +51,12 @@ export const getProducts = async (
   next: NextFunction
 ): Promise<any> => {
   try {
-    const { search, category, page = 1, limit = 10 } = req.query;
+    const { search, category, page = 1, limit = 10, all } = req.query;
 
-    const query: any = { isActive: true };
+    const query: any = {};
+    if (all !== "true") {
+      query.isActive = true;
+    }
 
     // Search query
     if (search) {
@@ -97,6 +100,72 @@ export const getProducts = async (
       .limit(limitNum);
 
     return sendResponse(res, 200, true, products, "Products retrieved successfully", {
+      page: pageNum,
+      limit: limitNum,
+      total,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+// @desc    Get bestseller products
+// @route   GET /api/products/bestsellers
+// @access  Public
+export const getBestsellerProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    const products = await Product.find({
+      isActive: true,
+      badge: { $regex: /best\s*seller/i },
+    }).populate("category", "name slug image isActive");
+
+    return sendResponse(res, 200, true, products, "Bestseller products retrieved successfully");
+  } catch (error) {
+    return next(error);
+  }
+};
+
+// @desc    Get products by category slug
+// @route   GET /api/products/category/:categorySlug
+// @access  Public
+export const getProductsByCategorySlug = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    const categorySlug = req.params.categorySlug || req.params.slug;
+    const { page = 1, limit = 10 } = req.query;
+
+    const foundCategory = await Category.findOne({
+      $or: [{ slug: categorySlug }, { name: categorySlug }],
+    });
+
+    if (!foundCategory) {
+      return sendResponse(res, 404, false, null, "Category not found");
+    }
+
+    const query = {
+      category: foundCategory._id,
+      isActive: true,
+    };
+
+    const pageNum = Math.max(1, Number(page));
+    const limitNum = Math.max(1, Number(limit));
+    const skipNum = (pageNum - 1) * limitNum;
+
+    const total = await Product.countDocuments(query);
+    const products = await Product.find(query)
+      .populate("category", "name slug image isActive")
+      .sort({ createdAt: -1 })
+      .skip(skipNum)
+      .limit(limitNum);
+
+    return sendResponse(res, 200, true, products, "Category products retrieved successfully", {
       page: pageNum,
       limit: limitNum,
       total,

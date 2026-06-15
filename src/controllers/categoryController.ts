@@ -31,8 +31,15 @@ export const getCategories = async (
   next: NextFunction
 ): Promise<any> => {
   try {
+    const { all } = req.query;
+    const matchQuery: any = {};
+    if (all !== "true") {
+      matchQuery.isActive = true;
+    }
+
     // Aggregate: join with products collection to count products per category
     const categories = await Category.aggregate([
+      { $match: matchQuery },
       {
         $lookup: {
           from: "products",

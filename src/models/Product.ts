@@ -106,4 +106,9 @@ const ProductSchema = new Schema<IProduct>(
   }
 );
 
+// Indexes for query performance optimization
+ProductSchema.index({ category: 1, isActive: 1 });
+ProductSchema.index({ badge: 1, isActive: 1 });
+ProductSchema.index({ isActive: 1, createdAt: -1 });
+
 export default mongoose.models.Product || mongoose.model<IProduct>("Product", ProductSchema);

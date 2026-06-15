@@ -8,6 +8,7 @@ import {
   createCategorySchema,
   updateCategorySchema,
 } from "../controllers/categoryController";
+import { getProductsByCategorySlug } from "../controllers/productController";
 import { validateBody } from "../middleware/validate";
 import { protect } from "../middleware/authMiddleware";
 import { adminOnly } from "../middleware/adminMiddleware";
@@ -16,6 +17,7 @@ const router = Router();
 
 router.get("/", getCategories);
 router.get("/:slug", getCategoryBySlug);
+router.get("/:slug/products", getProductsByCategorySlug);
 
 // Protected Admin routes
 router.post("/", protect, adminOnly, validateBody(createCategorySchema), createCategory);

@@ -28,6 +28,6 @@ const uploadMiddlewares = process.env.NODE_ENV === "development"
   ? [upload.single("image")]
   : [protect, adminOnly, upload.single("image")];
 
-router.post("/image", ...uploadMiddlewares, uploadImage);
+router.post("/image", uploadMiddlewares as any, uploadImage);
 
 export default router;
