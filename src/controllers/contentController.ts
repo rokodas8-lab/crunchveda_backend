@@ -43,10 +43,19 @@ export const getModuleById = async (req: Request, res: Response): Promise<void> 
 
 export const saveSection = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { moduleId, section } = req.body;
+    // Support both:
+    //   POST /sections (body: { moduleId, section: { id, ... } })
+    //   PUT  /modules/:moduleId/sections/:sectionId (body: { section: { ... } })
+    const moduleId: string = req.params.moduleId || req.body.moduleId;
+    let section: any = req.body.section || req.body;
+
+    // When called via PUT route, ensure section.id is set from URL param
+    if (req.params.sectionId && !section.id) {
+      section = { ...section, id: req.params.sectionId };
+    }
 
     if (!moduleId || !section || !section.id) {
-      res.status(400).json({ success: false, message: "moduleId and section are required" });
+      res.status(400).json({ success: false, message: "moduleId and section (with id) are required" });
       return;
     }
 

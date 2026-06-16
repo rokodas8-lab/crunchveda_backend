@@ -186,7 +186,7 @@ export const getProductBySlug = async (
   try {
     const product = await Product.findOne({ slug: req.params.slug }).populate(
       "category",
-      "name slug"
+      "name slug image isActive"
     );
 
     if (!product) {

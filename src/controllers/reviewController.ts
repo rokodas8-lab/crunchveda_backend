@@ -109,14 +109,8 @@ export const deleteReview = async (
       return sendResponse(res, 403, false, null, "Access denied, unauthorized to delete this review");
     }
 
-    // Trigger average recalculation by manually calling one-by-one delete
-    await Review.deleteOne({ _id: req.params.id });
-
-    // Manually trigger Mongoose aggregate update
-    const ReviewModel = Review.constructor as any;
-    if (ReviewModel.calculateAverageRating) {
-      await ReviewModel.calculateAverageRating(review.product);
-    }
+    // Delete the review using the document instance to trigger Mongoose document hooks (deleteOne)
+    await review.deleteOne();
 
     return sendResponse(res, 200, true, { id: req.params.id }, "Review deleted successfully");
   } catch (error) {

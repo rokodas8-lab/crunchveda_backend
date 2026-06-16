@@ -32,6 +32,7 @@ router.get("/home/timeline", getHomeTimeline);
 router.get("/home/faq", getHomeFaq);
 
 router.post("/sections", saveSection);
+router.put("/modules/:moduleId/sections/:sectionId", saveSection);
 router.delete("/modules/:moduleId/sections/:sectionId", deleteSection);
 
 export default router;

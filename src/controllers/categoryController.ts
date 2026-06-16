@@ -175,15 +175,15 @@ export const deleteCategory = async (
       return sendResponse(res, 404, false, null, "Category not found");
     }
 
-    // Check if any products still reference this category
-    const linkedProducts = await Product.countDocuments({ category: category._id });
+    // Check if any ACTIVE products still reference this category (per API doc spec)
+    const linkedProducts = await Product.countDocuments({ category: category._id, isActive: true });
     if (linkedProducts > 0) {
       return sendResponse(
         res,
         400,
         false,
         null,
-        `Cannot delete: ${linkedProducts} product(s) are linked to this category. Reassign or delete them first.`
+        `Cannot delete: ${linkedProducts} active product(s) are linked to this category. Reassign or deactivate them first.`
       );
     }
 
